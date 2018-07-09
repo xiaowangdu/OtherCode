@@ -33,10 +33,8 @@ int main()
     quicksort(vc, 0, 3);
     
     for(int i = 0; i < vc.size(); i++){
-        
         cout  << vc[i] << endl;
     }
-	
-
-	return 0;
+    
+    return 0;
 }
