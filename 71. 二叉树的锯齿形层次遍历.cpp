@@ -21,40 +21,56 @@ public:
         // write your code here
         vector<vector<int>> res;
         vector<int> res_tmp;
-        vector<TreeNode *> tmp;
-        vector<TreeNode *> tmp_next;
-        
         if(root == NULL){
             return res;
         }
 
-        TreeNode * p = root;
-        tmp.insert(tmp.begin(), p);
+        TreeNode * p = NULL;
+        TreeNode * endflag = NULL;
+        deque<TreeNode *> q;
         
+        q.push_back(root);
+        q.push_back(endflag);
+    
         bool flag = true;
-        do{
-            for(int i = 0; i < tmp.size(); ++i){
-                p = tmp[i];
-                res_tmp.push_back(p->val);
+        while(!q.empty()){
+            if(flag){
+                p = q.front();
+                q.pop_front();                
+            }
+            else{
+                p = q.back();
+                q.pop_back(); 
+            }
+            
+            if(p == endflag){
+                res.push_back(res_tmp);
+                res_tmp.clear();
                 
+                if(!q.empty()){
+                    if(flag){
+                        q.push_front(endflag);             
+                    }
+                    else{
+                        q.push_back(endflag);
+                    }
+
+                    flag = !flag;
+                }
+            }
+            else{
+                res_tmp.push_back(p->val);
                 if(flag){
-                    if(p->left)tmp_next.insert(tmp_next.begin(), p->left);
-                    if(p->right)tmp_next.insert(tmp_next.begin(), p->right);               
+                    if(p->left)q.push_back(p->left);
+                    if(p->right)q.push_back(p->right);  
                 }
                 else{
-                    if(p->right)tmp_next.insert(tmp_next.begin(), p->right); 
-                    if(p->left)tmp_next.insert(tmp_next.begin(), p->left);
-                }
+                    if(p->right)q.push_front(p->right); 
+                    if(p->left)q.push_front(p->left);    
+
+                } 
                 
             }
-            flag = !flag;
-            tmp = tmp_next;
-            tmp_next.clear();
-            
-            res.push_back(res_tmp);
-            res_tmp.clear();
-            
-        }while(tmp.size() > 0);
-
+        }
     }
 };
