@@ -34,7 +34,7 @@ void mergesort(vector<int> &src, vector<int> &temp, int start, int end){
         return;
     }
     
-    int mid = start + (end - start)/2;
+    int mid = start + (end - start) / 2;
     mergesort(src, temp, start, mid);
     mergesort(src, temp, mid + 1, end);
     
