@@ -4,27 +4,18 @@
 
 using namespace std;
 
-bool contain(vector<int> &list, int target){
-    for(int i = 0; i < list.size(); i++){
-        if(target == list[i]) return true;
-    }
-    
-    return false;
-}
-
-void permutation(vector<int> &list, vector<int> &A, vector<vector<int>> &res){
-    if(list.size() == A.size()){
+void subsets(vector<int> &list, vector<int> &A, int start, vector<vector<int>> &res){
+    if(list.size() > 0){
         res.push_back(list);
-        return;
     }
     
-    for(int i = 0; i < A.size(); i++){
-        if(contain(list, A[i])){
-            continue;
-        }
-        
+    if(start >= A.size()){
+        return;
+    }  
+    
+    for(int i = start; i < A.size(); i++){
         list.push_back(A[i]);
-        permutation(list, A, res);
+        subsets(list, A, i + 1, res);
         list.pop_back();
     }
 }
@@ -41,7 +32,7 @@ int main()
 
     vector<int> list;
     vector<vector<int>> res;
-    permutation(list, vc, res);
+    subsets(list, vc, 0, res);
 
     for(int i = 0; i < res.size(); i++){
         for(int j = 0; j < res[i].size(); j++){
